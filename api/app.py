@@ -16,8 +16,13 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def bib2authors(bibfile):
-    with open(bibfile) as bibtex_file:
-       bibtex_database = bibtexparser.load(bibtex_file)
+    try:
+        with open(bibfile) as bibtex_file:
+           bibtex_database = bibtexparser.load(bibtex_file)
+    except:
+        parser = bibtexparser.bparser.BibTexParser(common_strings=True)
+        with open(bibfile) as bibtex_file:
+            bibtex_database = bibtexparser.loads(bibtex_file.read(), parser=parser)
 
     works = Works()
     dois = []
