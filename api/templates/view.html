@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+<div class="row">
+<p>Para exportar o arquivo bibitex a partir do Google Scholar, selecione todos
+or artigos que a opção 'EXPORT' irá aparecer</p>
+<br>
+<img src="static/scholar.png" alt="scholar" height="40%;" width="40%;">
+<br>
+<br>
+</div>
+<br>
+<br>
+
+<div class="row">
+<p>Ou do ORCID</p>
+</div>
+<br>
+<br>
+<div class="row">
+<img src="static/orcid.png" alt="scholar" height="70%;" width="70%;">
+</div>
+<br>
+<br>
+<div class="row">
+<p>Após exportar é só fazer o upload do arquivo e esperar, para que ele seja
+convertido:</p>
+</div>
+
+<br>
+<br>
+<div class="row">
+    <div class="col">
+    <h2>Upload new File</h2>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    </div>
+</div>
+<br>
+<br>
+</div>
+
+<p>
+{% if result != None %}
+<h4>Plot:</h4>
+<img src="{{result}}">
+{% endif %}
+</p>
+
+{% endblock %}
+
