@@ -7,7 +7,7 @@ import time
 
 from crossref.restful import Works
 import bibtexparser
-import pandas as pd
+from pylatexenc.latex2text import LatexNodes2Text
 
 UPLOAD_FOLDER = 'api/static/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'tsv', 'bib'}
@@ -22,26 +22,27 @@ def bib2authors(bibfile):
     works = Works()
     dois = []
     for k,v in bibtex_database.entries_dict.items():
+        if 'year' not in v.keys():
+            continue
         if int(v['year'])>=2016:
             auth = v['author'].split('and')
             authv = [x.strip() for x in auth]
             #authv = [x.strip().split(',') for x in auth]
-
             if 'doi'in v.keys():
                 print('Recovering info from DOI: %s...' % v['doi'])
                 d = works.doi( v['doi'])
                 for va in d['author']:
                     if len(va['affiliation']):
-                        dois.append([f"{va['family']}, {va['given']}",
+                        dois.append([LatexNodes2Text().latex_to_text(f"{va['family']}, {va['given']}"),
                                      va['affiliation'][0]['name'],
                                      v['year'], v['doi'], d['title'][0]])
                     else:
-                        dois.append([f"{va['family']}, {va['given']}",
+                        dois.append([LatexNodes2Text().latex_to_text(f"{va['family']}, {va['given']}"),
                                      '',
                                      v['year'], v['doi'], d['title'][0]])
             else:
                 for va in authv:
-                    dois.append([va, '', v['year'], '', v['title']])
+                    dois.append([LatexNodes2Text().latex_to_text(va), '', v['year'], '', v['title']])
     header = [['Author', 'Affiliation', 'Year', 'Doi', 'Title']]
     return header+dois
 

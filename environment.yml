@@ -36,6 +36,7 @@ dependencies:
     - markupsafe==1.1.1
     - numpy==1.18.2
     - pandas==1.0.3
+    - pylatexenc==2.1
     - pyparsing==2.4.7
     - python-dateutil==2.8.1
     - pytz==2019.3
